@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "com.antilatency.displaystylus.unity.sdk": "file:../../Antilatency.DisplayStylus.Unity.SDK",
+    "com.antilatency.sdk": "file:../../AntilatencySdk-4.6.0-Unity",
+    "com.unity.test-framework": "1.6.0",
+    "com.unity.modules.physics": "1.0.0"
+  }
+}

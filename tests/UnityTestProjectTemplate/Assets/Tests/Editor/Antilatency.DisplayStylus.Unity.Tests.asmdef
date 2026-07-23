@@ -1,0 +1,23 @@
+{
+    "name": "Antilatency.DisplayStylus.Unity.Tests",
+    "rootNamespace": "Antilatency.DisplayStylus.SDK.Tests",
+    "references": [
+        "Antilatency.DisplayStylus.SDK",
+        "Antilatency.DisplayStylus.SDK.Editor",
+        "Antilatency.SDK"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false,
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ]
+}

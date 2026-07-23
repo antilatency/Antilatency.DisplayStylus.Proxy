@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <PlatformTarget>x64</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Nullable>disable</Nullable>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <AntilatencyNativeSdkRoot>$(MSBuildThisFileDirectory)..\..\external\AntilatencySdk-4.6.0-Native</AntilatencyNativeSdkRoot>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Antilatency.DisplayStylus.Proxy.Core\Antilatency.DisplayStylus.Proxy.Core.csproj" />
+    <Compile Include="$(AntilatencyNativeSdkRoot)\Api\Antilatency.cs" Link="SdkApi\Antilatency.cs" />
+    <Compile Include="$(AntilatencyNativeSdkRoot)\Api\Antilatency.InterfaceContract.cs" Link="SdkApi\Antilatency.InterfaceContract.cs" />
+    <Compile Include="$(AntilatencyNativeSdkRoot)\Api\Antilatency.Math.cs" Link="SdkApi\Antilatency.Math.cs" />
+    <Compile Include="$(AntilatencyNativeSdkRoot)\Api\Antilatency.DeviceNetwork.cs" Link="SdkApi\Antilatency.DeviceNetwork.cs" />
+    <Compile Include="$(AntilatencyNativeSdkRoot)\Api\Antilatency.DeviceNetwork.Interop.cs" Link="SdkApi\Antilatency.DeviceNetwork.Interop.cs" />
+    <Compile Include="$(AntilatencyNativeSdkRoot)\Api\Antilatency.Alt.Environment.cs" Link="SdkApi\Antilatency.Alt.Environment.cs" />
+    <Compile Include="$(AntilatencyNativeSdkRoot)\Api\Antilatency.Alt.Environment.Selector.cs" Link="SdkApi\Antilatency.Alt.Environment.Selector.cs" />
+    <Compile Include="$(AntilatencyNativeSdkRoot)\Api\Antilatency.Alt.Tracking.cs" Link="SdkApi\Antilatency.Alt.Tracking.cs" />
+    <Compile Include="$(AntilatencyNativeSdkRoot)\Api\Antilatency.HardwareExtensionInterface.cs" Link="SdkApi\Antilatency.HardwareExtensionInterface.cs" />
+    <Compile Include="$(AntilatencyNativeSdkRoot)\Api\Antilatency.HardwareExtensionInterface.Interop.cs" Link="SdkApi\Antilatency.HardwareExtensionInterface.Interop.cs" />
+    <Compile Include="$(AntilatencyNativeSdkRoot)\Api\Antilatency.PhysicalConfigurableEnvironment.cs" Link="SdkApi\Antilatency.PhysicalConfigurableEnvironment.cs" />
+    <AntilatencyNativeLibrary Include="$(AntilatencyNativeSdkRoot)\Bin\WindowsDesktop\x64\AntilatencyAltEnvironmentAdditionalMarkers.dll" />
+    <AntilatencyNativeLibrary Include="$(AntilatencyNativeSdkRoot)\Bin\WindowsDesktop\x64\AntilatencyAltEnvironmentRectangle.dll" />
+    <AntilatencyNativeLibrary Include="$(AntilatencyNativeSdkRoot)\Bin\WindowsDesktop\x64\AntilatencyAltEnvironmentSelector.dll" />
+    <AntilatencyNativeLibrary Include="$(AntilatencyNativeSdkRoot)\Bin\WindowsDesktop\x64\AntilatencyAltEnvironmentSides.dll" />
+    <AntilatencyNativeLibrary Include="$(AntilatencyNativeSdkRoot)\Bin\WindowsDesktop\x64\AntilatencyAltTracking.dll" />
+    <AntilatencyNativeLibrary Include="$(AntilatencyNativeSdkRoot)\Bin\WindowsDesktop\x64\AntilatencyDeviceNetwork.dll" />
+    <AntilatencyNativeLibrary Include="$(AntilatencyNativeSdkRoot)\Bin\WindowsDesktop\x64\AntilatencyHardwareExtensionInterface.dll" />
+    <AntilatencyNativeLibrary Include="$(AntilatencyNativeSdkRoot)\Bin\WindowsDesktop\x64\AntilatencyPhysicalConfigurableEnvironment.dll" />
+    <None Include="@(AntilatencyNativeLibrary)" Link="%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <None Include="$(AntilatencyNativeSdkRoot)\LICENSE.txt" Link="AntilatencySDK-LICENSE.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+  <Target Name="ValidateAntilatencySdk" BeforeTargets="BeforeBuild" Condition="!Exists('$(AntilatencyNativeSdkRoot)\Api\Antilatency.DeviceNetwork.cs') Or !Exists('$(AntilatencyNativeSdkRoot)\Bin\WindowsDesktop\x64\AntilatencyAltEnvironmentSides.dll') Or !Exists('$(AntilatencyNativeSdkRoot)\LICENSE.txt')">
+    <Error Text="Antilatency SDK 4.6.0 is missing. Run scripts\bootstrap.ps1 from the repository root." />
+  </Target>
+</Project>
