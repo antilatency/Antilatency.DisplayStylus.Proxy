@@ -28,8 +28,8 @@
     <AntilatencyNativeLibrary Include="$(AntilatencyNativeSdkRoot)\Bin\WindowsDesktop\x64\AntilatencyDeviceNetwork.dll" />
     <AntilatencyNativeLibrary Include="$(AntilatencyNativeSdkRoot)\Bin\WindowsDesktop\x64\AntilatencyHardwareExtensionInterface.dll" />
     <AntilatencyNativeLibrary Include="$(AntilatencyNativeSdkRoot)\Bin\WindowsDesktop\x64\AntilatencyPhysicalConfigurableEnvironment.dll" />
-    <None Include="@(AntilatencyNativeLibrary)" Link="%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
-    <None Include="$(AntilatencyNativeSdkRoot)\LICENSE.txt" Link="AntilatencySDK-LICENSE.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <None Include="@(AntilatencyNativeLibrary)" Link="%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="Always" />
+    <None Include="$(AntilatencyNativeSdkRoot)\LICENSE.txt" Link="AntilatencySDK-LICENSE.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="Always" />
   </ItemGroup>
   <Target Name="ValidateAntilatencySdk" BeforeTargets="BeforeBuild" Condition="!Exists('$(AntilatencyNativeSdkRoot)\Api\Antilatency.DeviceNetwork.cs') Or !Exists('$(AntilatencyNativeSdkRoot)\Bin\WindowsDesktop\x64\AntilatencyAltEnvironmentSides.dll') Or !Exists('$(AntilatencyNativeSdkRoot)\LICENSE.txt')">
     <Error Text="Antilatency SDK 4.6.0 is missing. Run scripts\bootstrap.ps1 from the repository root." />

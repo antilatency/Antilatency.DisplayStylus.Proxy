@@ -44,3 +44,7 @@ jobs:
       - name: Process smoke test
         shell: pwsh
         run: ./scripts/smoke-test.ps1
+
+      - name: Publish production packages
+        shell: pwsh
+        run: ./scripts/publish-production.ps1

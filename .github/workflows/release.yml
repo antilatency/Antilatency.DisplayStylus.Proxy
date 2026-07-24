@@ -70,19 +70,31 @@ jobs:
           RELEASE_TAG: ${{ github.ref_name }}
         run: |
           $tag = $env:RELEASE_TAG
-          $source = './artifacts/production/Antilatency.DisplayStylus.Proxy-win-x64.zip'
-          $asset = "./artifacts/production/Antilatency.DisplayStylus.Proxy-$tag-win-x64.zip"
-          Copy-Item -LiteralPath $source -Destination $asset
+          $assets = @(
+              @{
+                  Source = './artifacts/production/Antilatency.DisplayStylus.Proxy-win-x64.zip'
+                  Target = "./artifacts/production/Antilatency.DisplayStylus.Proxy-$tag-win-x64.zip"
+                  Output = 'archive'
+              },
+              @{
+                  Source = './artifacts/production/Antilatency.DisplayStylus.Proxy-win-x64-framework-dependent.zip'
+                  Target = "./artifacts/production/Antilatency.DisplayStylus.Proxy-$tag-win-x64-framework-dependent.zip"
+                  Output = 'framework_archive'
+              }
+          )
 
-          $hash = (Get-FileHash -LiteralPath $asset -Algorithm SHA256).Hash.ToLowerInvariant()
-          $checksum = "$asset.sha256"
-          [IO.File]::WriteAllText(
-              $checksum,
-              "$hash *$(Split-Path -Leaf $asset)`n",
-              [Text.UTF8Encoding]::new($false))
+          foreach ($item in $assets) {
+              Copy-Item -LiteralPath $item.Source -Destination $item.Target
+              $hash = (Get-FileHash -LiteralPath $item.Target -Algorithm SHA256).Hash.ToLowerInvariant()
+              $checksum = "$($item.Target).sha256"
+              [IO.File]::WriteAllText(
+                  $checksum,
+                  "$hash *$(Split-Path -Leaf $item.Target)`n",
+                  [Text.UTF8Encoding]::new($false))
 
-          "archive=$asset" >> $env:GITHUB_OUTPUT
-          "checksum=$checksum" >> $env:GITHUB_OUTPUT
+              "$($item.Output)=$($item.Target)" >> $env:GITHUB_OUTPUT
+              "$($item.Output)_checksum=$checksum" >> $env:GITHUB_OUTPUT
+          }
 
       - name: Publish GitHub Release
         shell: pwsh
@@ -94,12 +106,16 @@ jobs:
           if ($LASTEXITCODE -eq 0) {
               gh release upload $env:RELEASE_TAG `
                   '${{ steps.assets.outputs.archive }}' `
-                  '${{ steps.assets.outputs.checksum }}' `
+                  '${{ steps.assets.outputs.archive_checksum }}' `
+                  '${{ steps.assets.outputs.framework_archive }}' `
+                  '${{ steps.assets.outputs.framework_archive_checksum }}' `
                   --clobber
           } else {
               gh release create $env:RELEASE_TAG `
                   '${{ steps.assets.outputs.archive }}' `
-                  '${{ steps.assets.outputs.checksum }}' `
+                  '${{ steps.assets.outputs.archive_checksum }}' `
+                  '${{ steps.assets.outputs.framework_archive }}' `
+                  '${{ steps.assets.outputs.framework_archive_checksum }}' `
                   --verify-tag `
                   --generate-notes `
                   --title $env:RELEASE_TAG

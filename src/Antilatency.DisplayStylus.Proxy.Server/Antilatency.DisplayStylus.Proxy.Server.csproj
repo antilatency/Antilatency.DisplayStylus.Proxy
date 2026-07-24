@@ -14,6 +14,6 @@
     <ProjectReference Include="..\Antilatency.DisplayStylus.Proxy.Adn\Antilatency.DisplayStylus.Proxy.Adn.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="appsettings.json" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <None Update="appsettings.json" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="Always" />
   </ItemGroup>
 </Project>

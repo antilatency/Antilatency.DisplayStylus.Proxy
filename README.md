@@ -17,6 +17,8 @@ and run:
 .\run-proxy.cmd
 ```
 
+The optional compact `-framework-dependent.zip` package requires the [.NET 10 ASP.NET Core Runtime (x64)](https://dotnet.microsoft.com/download/dotnet/10.0).
+
 ## Build from source
 
 Requires the .NET 10 SDK.
@@ -38,7 +40,9 @@ Create the Windows x64 package locally:
 powershell -ExecutionPolicy Bypass -File scripts/publish-production.ps1
 ```
 
-The archive is written to `artifacts/production/Antilatency.DisplayStylus.Proxy-win-x64.zip`.
+The script creates the main self-contained archive and the optional compact
+`Antilatency.DisplayStylus.Proxy-win-x64-framework-dependent.zip` archive in
+`artifacts/production`.
 
 ## Fixed endpoint
 
